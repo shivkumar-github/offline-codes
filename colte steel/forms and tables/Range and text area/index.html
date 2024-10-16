@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Range And Textarea</title>
+</head>
+<body>
+	<form action="">
+		<label for="feedbackText">Enter your feedback</label>
+		<textarea name="feedbackText" id="feedbackText" rows="10" cols="20" placeholder="Type something new"></textarea>
+		<p>
+			<label for="cgpa"></label>
+			<input type="range" min="0" max="10" name="cgpa" id="cgpa" step="2" value="6"><!-- value is default value step is the quantity by which it will increase each time-->
+			<input type="number" min="0" max="20">
+		</p>
+		<button>submit</button>
+	</form>
+</body>
+</html>

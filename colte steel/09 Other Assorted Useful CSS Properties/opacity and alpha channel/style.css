@@ -1,0 +1,6 @@
+h1{
+	background-color: rgb(40, 173, 19);
+	font-size: 3rem;
+	color: rgba(23, 23, 23, 0.4);
+	opacity: 0.1;/*changes appearance of all the contents in the element not a specific property*/
+}

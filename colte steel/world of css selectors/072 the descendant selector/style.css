@@ -1,0 +1,12 @@
+*{
+	color: rgb(147, 147, 19);
+}
+p, div {
+	background-color: rgb(183, 183, 183);
+}
+div a{
+	color: red;
+}
+.myclass a{
+	color: rgb(13, 255, 25);
+}

@@ -1,0 +1,14 @@
+input.myclass {
+	background-color: black;
+}
+
+input[type="text"] {
+	background-color: red ;
+}
+/* NOTE: inline styles are highest  priority */
+input{
+	background-color: black !important;
+	font-size: inherit;/* inherits from nearest parent*/
+	
+}
+/* !imortant */

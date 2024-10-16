@@ -1,0 +1,70 @@
+* {
+	margin: 0%;
+	padding: 0;
+}
+
+section div {
+	width: 60px;
+	height: 60px;
+	margin: 10px;
+	background-color: rgb(236, 184, 121);
+	display: inline-block;
+}
+
+div.middle-div {
+	background-color: aqua;
+}
+
+#static div.middle-div {
+	position: static;
+	top: 100px;
+}
+
+#absolute div.middle-div {
+	position: absolute;
+	top: 40px;
+}
+
+#fixed div.middle-div {
+	position: fixed;
+	right: 20px;
+}
+
+#relative div.middle-div {
+	position: relative;/* with respective to it's orignal position*/
+	top: 50px;
+	left: 50px;
+}
+#sticky {
+	height: 500px;
+}
+#sticky div.middle-div {
+	position: sticky;
+	top: 0px;
+}
+#scrollText{
+	width: 20px;
+}
+
+#sticky-explain{
+	height: 150vh;
+}
+
+#sticky-explain div{
+	display: inline-block;
+	width: 170px;
+	height: 170px;
+	position: sticky;
+	background-color: rgb(57, 151, 151);
+	margin: 20px;
+}
+
+#sticky-explain div:nth-of-type(1){
+	top: 100px;
+}
+#sticky-explain div:nth-of-type(2){
+	top: 200px;
+}
+#sticky-explain div:nth-of-type(3){
+	top: 300px;
+}

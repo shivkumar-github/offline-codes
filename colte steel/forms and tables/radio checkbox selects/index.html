@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+	<form action="/birds">
+		<h2>Select your hobbies</h2>
+		<input type="checkbox" id="terms_and_conditions" name="terms_and_conditions">
+		<label for="terms_and_conditions">I agree to terms and condition</label>
+		<button type="submit">submit</button>
+	</form>
+	<form action="">
+		<h2>Select your gender</h2>
+		<!-- we need to give same name to them and for each radio option we need to give separate value which will be sent through the request -->
+		<label for="male">male</label>
+		<input type="radio" id="male" name="gender" value="male">
+		<label for="female">female</label>
+		<input type="radio" id="female" name="gender" value="female">
+		<label for="others">others</label>
+		<input type="radio" id="others" name="gender" value="others">
+		<button type="submit">submit</button>
+	</form>
+	<form action="">
+		<label for="country_name"> select your contry</label>
+		<select name="country_name" id="country_name">
+			<option value="usa">amercia</option>
+			<option value="india" selected>IN</option><!-- by default selected value when page reloads-->
+			<option value="pakistan">PAK</option>
+			<option value="russia">RUS</option>
+		</select>
+		<button>Submit contry name</button>
+	</form>
+</body>
+
+</html>

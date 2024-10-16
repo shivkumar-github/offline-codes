@@ -1,0 +1,8 @@
+p + button{
+	background-color: red;
+}/* apply this style to the button which comes immidiately after p tag*/
+
+/* direct children*/
+div>button {
+	background-color: magenta;
+}

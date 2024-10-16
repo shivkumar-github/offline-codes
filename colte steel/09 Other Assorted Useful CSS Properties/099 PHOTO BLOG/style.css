@@ -1,0 +1,23 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	font-family: New Rocker;
+}
+
+h1{
+	font-size: 2.5em;
+}
+
+img {
+	width: 30%;
+	margin: 1.5%;
+}
+
+nav {
+	border-bottom: 2px solid #f1f1f1;
+	margin-left: 1.5%;
+	padding: 1.5%;
+}

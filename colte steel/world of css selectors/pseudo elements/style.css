@@ -1,0 +1,26 @@
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	background-color: red;
+	text-decoration: underline;
+}
+
+button:hover {
+	background-color: red;
+}
+
+button:active {
+	background-color: green;
+}
+
+p:nth-of-type(3n) {
+	background-color: red;
+}
+p:first-letter{
+	font-size: 30px;
+} 
+p::selection{
+	background-color: yellow;
+}

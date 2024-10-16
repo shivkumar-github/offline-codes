@@ -1,0 +1,54 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+	  {
+		"label": "Compile and run",
+		"type": "shell",
+		"command": "cp",
+		"args": [
+		  "\"${file}\"",
+		  "/media/shivkumar/Windows/Users/shivk/OneDrive/Documents/offline codes/transfer codes/jspwTest.cpp",
+		  "&&",
+		  "g++",
+		  "/media/shivkumar/Windows/Users/shivk/OneDrive/Documents/offline codes/transfer codes/jspwTest.cpp",
+		  "-o",
+		  "/media/shivkumar/Windows/Users/shivk/OneDrive/Documents/offline codes/transfer codes/jspwTest",
+		  "&&",
+		  "/media/shivkumar/Windows/Users/shivk/OneDrive/Documents/offline codes/transfer codes/jspwTest",
+		  "<",
+		  "/media/shivkumar/Windows/Users/shivk/OneDrive/Documents/offline codes/transfer codes/input.txt",
+		  ">",
+		  "/media/shivkumar/Windows/Users/shivk/OneDrive/Documents/offline codes/transfer codes/output.txt",
+		  "&&",
+		  "rm",
+		  "/media/shivkumar/Windows/Users/shivk/OneDrive/Documents/offline codes/transfer codes/jspwTest",
+		  "&&",
+		  "rm",
+		  "/media/shivkumar/Windows/Users/shivk/OneDrive/Documents/offline codes/transfer codes/jspwTest.cpp"
+		],
+		"presentation": {
+		  "reveal": "never"
+		},
+		"group": {
+		  "kind": "build",
+		  "isDefault": true
+		},
+		"problemMatcher": {
+		  "owner": "cpp",
+		  "fileLocation": [
+			"relative",
+			"${workspaceRoot}"
+		  ],
+		  "pattern": {
+			"regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+			"file": 1,
+			"line": 2,
+			"column": 3,
+			"severity": 4,
+			"message": 5
+		  }
+		}
+	  }
+	]
+  }
+  

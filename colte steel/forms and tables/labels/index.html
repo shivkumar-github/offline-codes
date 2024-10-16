@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>label</title>
+</head>
+
+<body>
+	<h1>This is my form.</h1>
+	<form action="">
+		<label>Please enter your name.
+			<input id="username" name="username" type="text"> </label>
+		<label for="username">Please enter your name.</label>
+		<input id="username" name="username" type="text">
+		<!-- name sends the data through request and id is used by for tag of label-->
+		<label for="color">Select colore</label>
+		<input type="color" id="color" name="color">
+		<label for="select">select your option</label>
+		<select name="select" id="select">
+			<option value="true">true</option>
+			<option value="true">true</option>
+		</select>
+	</form>
+</body>
+
+</html>

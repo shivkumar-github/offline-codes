@@ -1,0 +1,46 @@
+*{
+	padding: 0%;
+	margin: 0%;
+}
+h1 {
+	display: none;
+	background-color: red;
+}
+
+p {
+	background-color: blue;
+	font-size: 20px;
+}
+button{
+	font-size: 40px;
+	padding: 0.25em 0.5em;
+	border-radius: 0.5em;
+}
+
+span {
+
+	font-size: 4em;
+	padding: 1em;/* it will change according to it's own font-size*/
+	background: #ba5858;
+}
+
+/* span{
+	background: palevioletred;
+	border: 3px solid black;
+	width: 300px;
+	height: 300px;/*height and width are ignored for inline and padding margin doesn't moves other things away*/
+/* padding: 40px;
+display: inline-block; */
+/*it still will be inline element but it's properties will be repspected*/
+/* } */
+
+*/ div {
+	height: 200px;
+	width: 50px;
+	background: #000;
+	margin: 4px;
+	display: inline-block;
+	/* this will be inline element but it's properties will be respected in case of font-size it directly proportional to parent font-size*/
+}
+
+/* em changes relatively */

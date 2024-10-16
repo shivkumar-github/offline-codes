@@ -1,0 +1,17 @@
+p {
+	text-align: right;
+	/* aligned with respect to element not with the webpage*/
+	font-weight: bold;
+	font-family: Verdana, Geneva, Tahoma, sans-serif;
+	letter-spacing: 0.1cm;
+}
+
+div {
+	text-decoration: red;
+	line-height: 200px;
+	text-decoration: blue underline wavy;
+}
+
+a{
+	text-decoration: none;
+}

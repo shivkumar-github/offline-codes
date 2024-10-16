@@ -1,0 +1,9 @@
+input[type="text"] {
+	background-color: magenta;
+}
+section[class="myclass"]{/*or section.myclass */
+	background-color: red;
+}
+a[href*="example"]{ /*a tag with href having example word*/
+	font-weight: bolder;
+}

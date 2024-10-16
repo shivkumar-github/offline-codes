@@ -1,0 +1,48 @@
+* {
+	margin: 0%;
+	padding: 0%;
+}
+
+body {
+	font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+h1 {
+	font-size: 6em;
+}
+
+nav {
+	font-size: 1.5em;
+}
+
+ul,
+li {
+	display: inline;
+	margin: 0;
+	padding: 0%;
+}
+
+/* @media (min-width:500px) and (max-width: 800px){
+	h1{
+		color: red;
+	}
+} */
+
+@media (min-width:50px) {
+	h1 {
+		color: red;
+	}
+}
+
+/* for screen width of greater than 500px set color green */
+@media (min-width:500px) {
+	h1 {
+		color: green;
+	}
+}
+
+@media (min-width:1000px) {
+	h1 {
+		color: rgb(174, 219, 9);
+	}
+}
