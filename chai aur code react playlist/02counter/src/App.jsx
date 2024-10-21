@@ -3,7 +3,7 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 
-// hooks help us to udate state of variables in whole webpage whereever it is used
+// hooks help us to update state of variables in whole webpage whereever it is used
 
 function App() {
 
