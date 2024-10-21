@@ -4,27 +4,28 @@
 	  {
 		"label": "Compile and run",
 		"type": "shell",
-		"command": "cp",
+		"command": "",
 		"args": [
+		  "cp",
 		  "\"${file}\"",
-		  "/media/shivkumar/Windows/Users/shivk/OneDrive/Documents/offline codes/transfer codes/jspwTest.cpp",
+		  "${workspaceFolder}/jspwTest.cpp",
 		  "&&",
 		  "g++",
-		  "/media/shivkumar/Windows/Users/shivk/OneDrive/Documents/offline codes/transfer codes/jspwTest.cpp",
+		  "jspwTest.cpp",
 		  "-o",
-		  "/media/shivkumar/Windows/Users/shivk/OneDrive/Documents/offline codes/transfer codes/jspwTest",
+		  "jspwTest",
 		  "&&",
-		  "/media/shivkumar/Windows/Users/shivk/OneDrive/Documents/offline codes/transfer codes/jspwTest",
+		  "./jspwTest",
 		  "<",
-		  "/media/shivkumar/Windows/Users/shivk/OneDrive/Documents/offline codes/transfer codes/input.txt",
+		  "input.txt",
 		  ">",
-		  "/media/shivkumar/Windows/Users/shivk/OneDrive/Documents/offline codes/transfer codes/output.txt",
+		  "output.txt",
 		  "&&",
 		  "rm",
-		  "/media/shivkumar/Windows/Users/shivk/OneDrive/Documents/offline codes/transfer codes/jspwTest",
+		  "jspwTest",
 		  "&&",
 		  "rm",
-		  "/media/shivkumar/Windows/Users/shivk/OneDrive/Documents/offline codes/transfer codes/jspwTest.cpp"
+		  "jspwTest.cpp"
 		],
 		"presentation": {
 		  "reveal": "never"
