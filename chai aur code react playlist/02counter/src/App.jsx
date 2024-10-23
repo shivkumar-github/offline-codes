@@ -15,6 +15,20 @@ function App() {
         if(counter+1<=20)
         counter += 1
         setCounter(counter) // setCounter(counter+1)
+        /*
+        React doesn't updates data quickly instead it sends data in batches, when you call setCounter(counter + 1) four times in a row, React is using the same value of counter for each call because counter hasn’t been updated yet between the calls. So, all four updates are using the same counter value.
+        setCounter(counter + 1);
+        setCounter(counter + 1);
+        setCounter(counter + 1);
+        setCounter(counter + 1);
+        // to do this properly we do (as when we do it in function component it ensures that after each call the value is updated.)
+        setCounter(prevCounter => prevCounter + 1);
+        setCounter(prevCounter => prevCounter + 1);
+        setCounter(prevCounter => prevCounter + 1);
+        setCounter(prevCounter => prevCounter + 1);
+        */
+
+
     }
     const reduceValue = () => {
         if(counter-1>=0) // when value needs in between 0 to 20
