@@ -24,3 +24,9 @@
 ### Sets Up PostCSS: PostCSS will process your Tailwind CSS, transforming it into usable CSS.
 ### Enables Autoprefixer: Autoprefixer will ensure your CSS is compatible with older browsers by adding vendor prefixes where necessary.
 
+
+### The content array specifies the paths to all the files where Tailwind CSS should look for class names. This includes:
+
+###    ./index.html: The main HTML file.
+###  	./src/**/*.{js,ts,jsx,tsx}: All JavaScript, TypeScript, JSX, and TSX files in the src directory and its subdirectories. The **/* syntax means it includes all nested folders.
+
