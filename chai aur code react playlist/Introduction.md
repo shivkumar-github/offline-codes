@@ -30,3 +30,5 @@
 ###    ./index.html: The main HTML file.
 ###  	./src/**/*.{js,ts,jsx,tsx}: All JavaScript, TypeScript, JSX, and TSX files in the src directory and its subdirectories. The **/* syntax means it includes all nested folders.
 
+# Context API's - 
+### Context api's are a convinient way to pass the data across different components, which needs to be dynamically changed. First you need to create a contexts file (there can be mutliple context files in a project.) then give the functionalities using ContextProvider tag and import those functionalities in components by importing the context.
