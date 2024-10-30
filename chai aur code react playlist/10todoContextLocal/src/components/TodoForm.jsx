@@ -8,7 +8,8 @@ function TodoForm() {
 	const add = (e) => {
 		e.preventDefault();
 
-		todo && addTodo({todo, completed:false})// if todo entered by the user is non empty (note that id is setted in the addTodo method hence no need to mention here)
+		todo && addTodo({ todo, completed: false })// if todo entered by the user is non empty (note that id is setted in the addTodo method hence no need to mention here)
+		setTodo('');
 	}
 
 	return (

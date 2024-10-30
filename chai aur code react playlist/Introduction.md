@@ -32,3 +32,10 @@
 
 # Context API's - 
 ### Context api's are a convinient way to pass the data across different components, which needs to be dynamically changed. First you need to create a contexts file (there can be mutliple context files in a project.) then give the functionalities using ContextProvider tag and import those functionalities in components by importing the context.
+
+# Redux Toolkit -
+### Store is the place where all data i.e. to be managed is stored and each store can contain multiple set of data called slices.
+
+## Difference between actions and reducers: -
+### Actions are like notes that say, "This is what I want to happen."
+### Reducers are like the people who read those notes and carry out the actions.
