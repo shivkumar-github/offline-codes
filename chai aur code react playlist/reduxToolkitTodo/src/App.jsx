@@ -8,7 +8,7 @@ function App() {
 
   return (
     <Provider store={store}> {/* instead of values in context we pass store here */}
-      <h1>learn about redux toolki</h1>
+      <h1 className="text-center">learn about redux toolkit.</h1>
       <AddTodo />
       <Todos />
     </Provider>

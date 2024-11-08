@@ -1,7 +1,7 @@
 import { createSlice, nanoid } from '@reduxjs/toolkit'
 
 const initialState = {
-	todos: [{ id: 1, text: "Hello World!" }]
+	todos: []
 }; // initial state can be array or an object.
 
 export const todoSlice = createSlice({
@@ -11,13 +11,16 @@ export const todoSlice = createSlice({
 		addTodo: (state, action) => {
 			const todo = {
 				id: nanoid(),
-				text: action.payload.text // action.payload is object
+				text: action.payload,
+				isTodoEditable: false
 			}
+
 			state.todos.push(todo);
 		}, // state provides state (like we have initial state) and action provides other needed arguements
 		removeTodo: (state, action) => {
-			state.todos.filter((todo) => action.payload.id !== todo.id);
+			state.todos = state.todos.filter((todo) => (action.payload !== todo.id));
 		},
+		editTodo: (state, action) => { }
 		// DOUBT: make update todo
 	}
 })
