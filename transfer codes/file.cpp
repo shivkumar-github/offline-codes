@@ -2,66 +2,70 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+// 845
+// 638 414 105 0 325 315 209 24 68 409 611
+
 // } Driver Code Ends
-class Solution
-{
-public:
-	vector<int> maxCombinations(int N, int K, vector<int> &A, vector<int> &B)
-	{
-		vector<int> ans;
-		sort(A.begin(), A.end());
-		sort(B.begin(), B.end());
-		int ia = N - 1, ib = N - 1;
-		while (ib >= 0)
-		{
-			while (ia >= 0)
-			{
-				ans.push_back(A[ia] + B[ib]);
-				if (ans.size() == K)
-					return ans;
-				int lower = A[ia - 1] + B[ib];
-				int ob = 1;
-				while (A[ia] + B[ib - ob] >= lower)
-				{
-					ans.push_back(A[ia] + B[ib - ob]);
-					if (ans.size() == K)
-						return ans;
-				}
-				ia--;
-			}
-			ib--;
-		}
-		return ans;
-	}
+class Solution {
+  public:
+  
+    int util(vector<int>& coins, unordered_map<int, int>& dp, int sum){
+		if (sum == 0)
+			return 0;
+
+        int min_res = INT_MAX;
+        
+        for(int i = 0;i<coins.size();i++){
+            if(coins[i]<=sum && coins[i]!=0){
+                int rem_sum = sum-coins[i];
+                
+                if(dp.find(rem_sum) == dp.end()) {
+                    int res = util(coins, dp, rem_sum);
+                    if(res != -1)
+                        dp[rem_sum] = 1+res;
+                    else 
+                        dp[rem_sum] = -1;
+                }
+                
+                if(dp[rem_sum] != -1)
+                    min_res = min(min_res, dp[rem_sum]);
+            }
+        }
+        return min_res!=INT_MAX?min_res:-1; 
+    }
+    
+    int minCoins(vector<int> &coins, int sum) {
+        unordered_map<int, int> dp;// dp array to store ans of overlapping subproblems
+        return util(coins, dp, sum);
+    }
 };
 
 //{ Driver Code Starts.
 
-int main()
-{
-	int t;
-	cin >> t;
+int main() {
+    // string ts;
+    // getline(cin, ts);
+    // int t = stoi(ts);
+	int t = 1;
 	while (t--)
 	{
-		int N, K;
-		cin >> N >> K;
-
-		vector<int> A(N), B(N);
-		for (int i = 0; i < N; i++)
-		{
-			cin >> A[i];
-		}
-		for (int i = 0; i < N; i++)
-		{
-			cin >> B[i];
-		}
-		Solution obj;
-		vector<int> ans = obj.maxCombinations(N, K, A, B);
-		cout << "printing answer";
-		for (auto &it : ans)
-			cout << it << ' ';
-		cout << endl;
+		string ks;
+        getline(cin, ks);
+        int k = stoi(ks);
+        vector<int> arr;
+        string input;
+        getline(cin, input);
+        stringstream ss(input);
+        int number;
+        while (ss >> number) {
+            arr.push_back(number);
+        }
+        Solution obj;
+        int res = obj.minCoins(arr, k);
+        cout << res << endl;
+        cout << "~" << endl;
 	}
 	return 0;
 }
+
 // } Driver Code Ends

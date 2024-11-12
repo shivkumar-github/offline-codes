@@ -3,21 +3,30 @@
 
 <%- include('./partials/header.ejs') %> <!-- This includes the <head> section -->
 
-<body>
-	<%- include('./partials/nav.ejs') %>
+	<body>
+		<%- include('./partials/nav.ejs') %>
 
-	<h3>Blogs</h3>
+			<main id="blogs-main">
+				<h1 class="heading">Blogs</h3>
 
-	<% if(blogs.length > 0) { %>
-		<% blogs.forEach(blog => { %>
-			<h3><%= blog.title %></h3>
-			<p><%= blog.snippet %></p>
-		<% }); %>
-	<% } else { %>
-		<p>No blogs to display</p>
-	<% } %>
-
-	<%- include('./partials/footer.ejs') %>
-</body>
+					<% if(blogs.length> 0) { %>
+						<% blogs.forEach(blog=> { %>
+							<div class="single-blog-div">
+								<a class="single" href="/blogs/<%= blog._id %>">
+									<h3 class="blog-title">
+										<%= blog.title %>
+									</h3>
+									<p class="blog-snippet">
+										<%= blog.snippet %>
+									</p>
+								</a>
+							</div>
+							<% }); %>
+								<% } else { %>
+									<p>No blogs to display</p>
+									<% } %>
+			</main>
+			<%- include('./partials/footer.ejs') %>
+	</body>
 
 </html>
