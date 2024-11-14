@@ -46,6 +46,7 @@ header a{
   }
   
   .workout-details{
+	position: relative;
 	background: #fff;
 	border-radius: 5px;
 	padding: 20px;
@@ -66,14 +67,22 @@ header a{
   }
   
   .workout-details span {
+	border-radius:50%;
 	position: absolute;
-	top: 20px;
-	right: 20px;
+	padding:4px;
+	top: 27px;
+	right: 27px;
 	cursor: pointer;
 	background: #f1f1f1;
-	padding: 6px;
-	border-radius: 50%;
 	color: #333;
+	height:23px; 
+	width:23px;
+  }
+
+  .workout-details span svg{
+	border-radius:50%;
+	height:100%;
+	width:100%;
   }
 
   /* new workout form */
@@ -110,3 +119,6 @@ label, input{
 	margin: 20px 0;
   }
   
+  input.error{
+	border:1px solid var(--error);
+  }
