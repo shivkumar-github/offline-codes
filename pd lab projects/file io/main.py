@@ -8,13 +8,13 @@ with open('data.txt') as fread:
 	words = []
 	counter = 0
 	for line in lines:
-		curr_words = re.split(r'\W+', line.lower())
+		curr_words = re.findall(r'\b\w+\b', line.lower())
 		words.extend(curr_words)
 
 		if len(line.strip())>0:
 			counter+=1
 			newLines.append(line[0].upper() + line[1:-1] + line[-1].upper())
-
+	print(newLines)
 	counter = Counter(words)
 	print("Unique words in the file : ")
 	for word, count in counter.items():
