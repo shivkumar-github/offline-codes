@@ -1,23 +1,26 @@
 from collections import Counter
-data = ''
-with open('data.txt','r') as fread:
-	data = fread.read()
-	words = data.lower().replace('.', ' ').split()
-	counter = Counter(words)
-	print("No of unique words in file are, ",len(counter))
-	for i in counter:
-		print(i, counter[i])
-	fread.close()
+import re
 
-with open('data.txt', 'r') as fread:
+with open('data.txt') as fread:
 	lines = fread.readlines()
 	newLines = []
-	print('the number new lines in data are ',len(lines))
+
+	words = []
+	counter = 0
 	for line in lines:
-		if len(line) > 1:
-			newLine = line[0].upper() + line[1:-1] + line[-1].upper()
-		else:
-			newLine = line.upper() 
-		newLines.append(newLine)
+		curr_words = re.split(r'\W+', line.lower())
+		words.extend(curr_words)
+
+		if len(line.strip())>0:
+			counter+=1
+			newLines.append(line[0].upper() + line[1:-1] + line[-1].upper())
+
+	counter = Counter(words)
+	print("Unique words in the file : ")
+	for word, count in counter.items():
+		print(word, count)
+        
 	with open('data.txt', 'w') as fwrite:
 		fwrite.writelines(newLines)
+		fwrite.close()
+	fread.close()
