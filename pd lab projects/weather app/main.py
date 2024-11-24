@@ -1,86 +1,101 @@
-# imports
 import tkinter as tk
-import requests 
-import datetime
-from tkinter import font
+import requests
+from datetime import datetime
 
-# sunrise_icon.png sunset_icon.png
-
-# handling backend
 apiKey = 'a393a1d9db732e99ca504204603d38e8'
 
 def displayWeatherInfo():
-	city = cityInput.get().lower()
-	url = f"https://api.openweathermap.org/data/2.5/weather?q={city}&appid={apiKey}&units=metric"
-	if not city:
-		resultLabel.config('Please Enter a city name!')
-		return
-	
+    city = cityInput.get().title()
+    if not city:
+        resultLabel.config(text="Please enter a city name!")
+        return
 
-	try:
-		response = requests.get(url=url)
-		data = response.json()
-		if data.get('cod') != 200:
-			resultLabel.config(text=f"Error : {data.get('message')}, Invalid city")
-			return 
-			
-		main = data['weather'][0]['main']
-		desc = data['weather'][0]['description']
-		temp = data['main']['temp']
-		feels_like = data['main']['feels_like']
-		sunrise = datetime.datetime.fromtimestamp(int(data['sys']['sunrise'])).strftime('%I : %M : %S %p')
-		sunset = datetime.datetime.fromtimestamp(int(data['sys']['sunset'])).strftime('%I : %M : %S %p')
-		weatherInfo = (
-			f"Weather: {main} ({desc})\n"
-				f"Temperature: {temp}°C     "
-				f"Feels Like(dy=due to humidity): {feels_like}°C\n"
-				f"Sunrise: {sunrise}"
-				f"Sunset: {sunset}"
-		)
+    url = f"https://api.openweathermap.org/data/2.5/weather?q={city}&appid={apiKey}&units=metric"
 
-		resultLabel.config(text=weatherInfo)
-	except:
-		resultLabel.config(text='Sorry we are unable to fetch weather at this moment')
+    try:
+        response = requests.get(url)
+        data = response.json()
 
-# creating window
+        if data.get("cod") != 200:
+            resultLabel.config(text=f"Error: {data.get('message')}")
+            return
+
+        
+        main = data["weather"][0]["main"]
+        desc = data["weather"][0]["description"]
+        temp = data["main"]["temp"]
+        feels_like = data["main"]["feels_like"]
+        sunrise = datetime.fromtimestamp(data["sys"]["sunrise"]).strftime("%I:%M %p")
+        sunset = datetime.fromtimestamp(data["sys"]["sunset"]).strftime("%I:%M %p")
+
+        
+        weather_info = (
+            f"🌤 Weather: {main} ({desc})\n"
+            f"🌡 Temperature: {temp}°C\n"
+            f"🥶 Feels Like: {feels_like}°C\n"
+            f"🌅 Sunrise: {sunrise}\n"
+            f"🌇 Sunset: {sunset}"
+        )
+        resultLabel.config(text=weather_info)
+    except Exception as e:
+        resultLabel.config(text="Unable to fetch weather data.")
+
+def on_hover(event):
+    event.widget.config(bg="#45a049")
+
+def off_hover(event):
+    event.widget.config(bg="#4CAF50")
+
 root = tk.Tk()
-root.title("What's the weather today!")
-root.geometry('600x400') # dimensions ('x' is used as dimension separator)
-root.configure(bg='#f0f0f0')
+root.title("pyAtmos")
+root.geometry("500x600")
+root.configure(bg="#87CEEB")  
 
-# creating font styles for labels using  ((font_family, size, style))
-titleFontTouple = ("Helvetica",20,"bold")
-labelFontTouple = ("Helvetica",14)
-resultFontTouple = ("Helvetica",12)
+titleLabel = tk.Label(
+    root,
+    text="Weather Forecast 🌤",
+    font=("Helvetica", 20, "bold"),
+    bg="#87CEEB",
+    fg="white"
+)
+titleLabel.pack(pady=20)
 
 
-# label creates a text label to display text
-titleLabel = tk.Label(root, text="What's the weather today!",font=titleFontTouple )
-titleLabel.pack(pady=20) # pady and padx in pack work similar to margin
+cityInput = tk.Entry(root, font=("Helvetica", 14), justify="center", relief="flat")
+cityInput.pack(pady=10, ipadx=10, ipady=5)
 
-cityLabel = tk.Label(root,text='Enter City', font=labelFontTouple)
-cityLabel.pack(pady=5)
 
-cityInput = tk.Entry(root, font=labelFontTouple, width=30) # this width is length of 30 characters
-cityInput.pack(pady=10)
+submitButton = tk.Button(
+    root,
+    text="Check Weather 🌦",  
+    command=displayWeatherInfo,
+    font=("Helvetica", 14),
+    bg="#4CAF50",
+    fg="white",
+    relief="flat",
+    padx=20,
+    pady=10
+)
+submitButton.pack(pady=10)
+submitButton.bind("<Enter>", on_hover)
+submitButton.bind("<Leave>", off_hover)
 
-button = tk.Button(
-	root,
-	text='Submit',
-	command=displayWeatherInfo,
-	font=labelFontTouple, 
-	bg='#4CAF50',
-	fg='white',
-	relief='flat',
+
+resultFrame = tk.Frame(root, bg="white", bd=2, relief="sunken")
+resultFrame.pack(pady=20, padx=20, fill="both", expand=True)
+
+resultLabel = tk.Label(
+    resultFrame,
+    text="",
+    font=("Helvetica", 14),
+    bg="white",
+    fg="black",
+    justify="left",
+    anchor="nw",
     padx=10,
-	pady=5
-	)
-button.pack(pady=10)
-
-resultLabel = tk.Label(root, font=resultFontTouple)
-resultLabel.pack()
+    pady=10
+)
+resultLabel.pack(fill="both", expand=True)
 
 
-# keeps our application running
 root.mainloop()
-

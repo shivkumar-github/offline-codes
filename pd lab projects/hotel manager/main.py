@@ -6,7 +6,6 @@ import matplotlib.pyplot as plt
 import qrcode
 import time
 
-# Initialize the available menu items and prices
 available_items = {
     "Dosa": 50,
     "Idli": 30,
@@ -17,20 +16,19 @@ available_items = {
 added_items = []
 order_id = str(time.time()) 
 
-# Colors for styling
-BACKGROUND_COLOR = "#f9f9f9"  # Main background
-FRAME_BG = "#ffffff"  # Frame background
-TEXT_COLOR = "#333333"  # Text color
-BUTTON_BG = "#4caf50"  # Button background
-BUTTON_FG = "#ffffff"  # Button text
-HIGHLIGHT_COLOR = "#a5d6a7"  # Highlight (light green)
 
-# Connect to SQLite3 Database (Create or Open)
+BACKGROUND_COLOR = "#f9f9f9"
+FRAME_BG = "#ffffff"  
+TEXT_COLOR = "#333333"
+BUTTON_BG = "#4caf50" 
+BUTTON_FG = "#ffffff" 
+HIGHLIGHT_COLOR = "#a5d6a7"
+
 def connect_db():
-    conn = sqlite3.connect('orders.db')  # Create or open the database
+    conn = sqlite3.connect('orders.db')  
     return conn
 
-# Initialize the database and create necessary tables
+
 def init_db():
     conn = connect_db()
     cursor = conn.cursor()
@@ -43,7 +41,6 @@ def init_db():
     conn.commit()
     conn.close()
 
-# Update order data in the database
 def update_order_in_db(item_name, quantity):
     conn = connect_db()
     cursor = conn.cursor()
@@ -56,7 +53,6 @@ def update_order_in_db(item_name, quantity):
     conn.commit()
     conn.close()
 
-# Generate a pie chart of item quantities ordered
 def generate_pie_chart():
     data = get_order_data_from_db()
     if not data:
@@ -71,7 +67,6 @@ def generate_pie_chart():
     plt.title("Item Distribution - Total Orders")
     plt.show()
 
-# Retrieve data for the pie chart from the database
 def get_order_data_from_db():
     conn = connect_db()
     cursor = conn.cursor()
@@ -80,12 +75,10 @@ def get_order_data_from_db():
     conn.close()
     return data
 
-# Update the total amount based on added items
 def update_total_amount():
     total = sum(item.price * item.quantity for item in added_items)
     total_label.config(text=f"Total Amount: ₹{total}")
 
-# Add item to the order list
 def add_item():
     item_name = menu_drop_down.get()
     quantity = quantity_drop_down.get()
@@ -96,20 +89,13 @@ def add_item():
         added_items.append(new_item)
         update_total_amount()
 
-# Generate QR code for online payment
 def generate_qr_code(amount):
-    qr = qrcode.QRCode(
-        version=1,
-        error_correction=qrcode.constants.ERROR_CORRECT_L,
-        box_size=10,
-        border=4,
-    )
+    qr = qrcode.QRCode()
     qr.add_data(f"Payment: ₹{amount}")
     qr.make(fit=True)
     img = qr.make_image(fill="black", back_color="white")
     img.show()
 
-# Reset the order by clearing the UI and item list
 def reset_order():
     global added_items
     added_items.clear()
@@ -118,23 +104,21 @@ def reset_order():
     for widget in ofr_orders_frame.winfo_children():
         widget.destroy()
 
-# Process payment based on selected method
 def process_payment():
     global added_items, order_id
     total_amount = sum(item.price * item.quantity for item in added_items)
-    # Update database only when payment is processed
+
     for item in added_items:
         update_order_in_db(item.name, item.quantity)
     if payment_method_var.get() == "Online":
         generate_qr_code(total_amount)
     else:
         generate_bill_window(total_amount)
-    # Reset the order after processing payment
+
     reset_order()
-    order_id = str(time.time())  # Generate a new order ID
+    order_id = str(time.time())  
     ofrtitle.config(text=f"Your Order - ID {order_id}")
 
-# Generate and display bill window
 def generate_bill_window(total_amount):
     bill_window = tk.Toplevel(root)
     bill_window.geometry("400x300")
@@ -147,11 +131,9 @@ def generate_bill_window(total_amount):
     bill_button = tk.Button(bill_window, text="Close", font=("Helvetica", 12), bg=BUTTON_BG, fg=BUTTON_FG, relief="flat", command=bill_window.destroy)
     bill_button.pack(pady=10)
 
-# Cancel the order and reset everything
 def cancel_order():
     reset_order()
 
-# Create the ordered item representation class
 class OrderedItem:
     def __init__(self, name, quantity, price):
         self.name = name
@@ -177,16 +159,14 @@ class OrderedItem:
         update_total_amount()
         self.frame.destroy()
 
-# Set up the GUI
+
 root = tk.Tk()
 root.geometry('900x800')
 root.title("Order Management System")
 root.config(bg=BACKGROUND_COLOR)
 
-# Initialize database
 init_db()
 
-# Select order frame
 ofr = tk.Frame(root, height=800, bg=BACKGROUND_COLOR)
 ofr.pack(side="left", fill="both", expand=True)
 
