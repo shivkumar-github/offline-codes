@@ -5,7 +5,7 @@ from datetime import datetime
 apiKey = 'a393a1d9db732e99ca504204603d38e8'
 
 def displayWeatherInfo():
-    city = cityInput.get().title()
+    city = cityInput.get()
     if not city:
         resultLabel.config(text="Please enter a city name!")
         return
@@ -36,18 +36,20 @@ def displayWeatherInfo():
             f"🌅 Sunrise: {sunrise}\n"
             f"🌇 Sunset: {sunset}"
         )
+    
         resultLabel.config(text=weather_info)
     except Exception as e:
         resultLabel.config(text="Unable to fetch weather data.")
 
-def on_hover(event):
+def on_enter(event):
     event.widget.config(bg="#45a049")
 
-def off_hover(event):
+def on_leave(event):
     event.widget.config(bg="#4CAF50")
 
 root = tk.Tk()
 root.title("pyAtmos")
+root.resizable(False,False)
 root.geometry("500x600")
 root.configure(bg="#87CEEB")  
 
@@ -77,9 +79,8 @@ submitButton = tk.Button(
     pady=10
 )
 submitButton.pack(pady=10)
-submitButton.bind("<Enter>", on_hover)
-submitButton.bind("<Leave>", off_hover)
-
+submitButton.bind("<Enter>", on_enter)
+submitButton.bind("<Leave>", on_leave)
 
 resultFrame = tk.Frame(root, bg="white", bd=2, relief="sunken")
 resultFrame.pack(pady=20, padx=20, fill="both", expand=True)
@@ -96,6 +97,5 @@ resultLabel = tk.Label(
     pady=10
 )
 resultLabel.pack(fill="both", expand=True)
-
 
 root.mainloop()
