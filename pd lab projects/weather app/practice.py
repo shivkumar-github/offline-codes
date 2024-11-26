@@ -200,5 +200,133 @@ a = {'day':'Monday', 'month':'december', 'year':2020, 'name':"shivkumar"}
 # n = 1
 # arr = [int(i) for i in input("Enter the array").split()]
 # print(cumProd(arr))
-arr = [1,2,3,4]
-print(arr[1:len(arr)])
+# arr = [1,2,3,4]
+# print(arr[1:len(arr)])
+
+n = 7
+# print('\n'.join(['*'*i for i in range(1, n+1)]))
+# print('\n'.join([' '*(n-i)+'*'*i for i in range(1,n+1)]))
+# print('\n'.join([' '*i + '*'*(n-i) for i in range(0,n)]))
+# print('\n'.join(['*'*(n-i) + ' '*i for i in range(0, n)]))
+# print('\n'.join([' '*(i//2) + '*'*(n-i) for i in range(0,n, 2)]))
+# print('\n'.join(['*'*i + ' '*(n-2*i) + '*'*i for i in range(1,n//2+1)]))
+
+# def printName(fname, lname):
+#     print(fname, lname)
+    
+# printName(lname="rajmane" , fname="shivkumar" )
+
+# sum = lambda x, y:x+y
+# print(sum(4,5))
+
+# l1 = [1,2,3,4]
+# l2 = [1,2,3,4]
+# mp = map(lambda n1, n2:n1*n2)
+# print(list(mp))
+
+# n1 = [1, 2, 3]
+# n2 = [4, 5, 6]
+# r = map(lambda num1, num2: num1+num2, n1, n2)
+# # syntax of map -  map(function, iterables) the functions should accept arguement equal to no of iterables present
+
+# print(list(r))
+
+
+# # filter function
+# nums = [1,2,3,4,5,6]
+# filtered = filter(lambda i:i%2, nums)
+# print(filtered)
+
+
+# # reduce function reduce needs to be imported from functools
+# import functools
+# reduced = functools.reduce(lambda i,j:i*j, nums)
+# print(reduced)
+
+# print(int('1'))
+
+# x = 200
+
+# def abc():
+# 	global x
+# 	x = 2
+# 	print(x)
+# 	print(x)
+# abc()
+# print(x)
+
+# import sys
+# randList = [2,38,4,21,3,4,0]
+# for i in randList:
+#     try:
+#         print("The entries are : ")
+#         print(1/i)
+#     except:
+#         print((sys.exc_info()[0]))
+        
+# try:
+#     print(x1)
+# except NameError:
+#     print("Please Declare the varaible before using it")
+    
+# try:
+#     exec("if 3 > 1 print('hello')")  # Incorrect syntax
+# except SyntaxError:
+#     print("Type code correctly")
+# try:
+#     print(int('x'))
+# except ValueError:
+# # 	print("check variable names")
+# print(int('x'))
+
+
+# raise ValueError('The value error has occured')
+import matplotlib.pyplot as plt
+
+# a = [1,3,4,7,9]
+# b = [2,4,5,8,10]
+# plt.plot(a,b)
+# plt.xlabel('x-axis')
+# plt.ylabel('y-axis')
+# plt.title("Simple line plot")
+# plt.show()
+
+# '''these are multiline comments'''
+# print(type((1,)))
+# # python doesn't contain char data type
+# class myClass:
+# 	def __init__(self) :
+# 		print("Object initialised successfully!")
+
+# with open ('data.txt', 'w') as f:
+#     f.read()
+
+class Person:
+	def __init__(self, fname, lname) -> None:
+		print("object inititalised")
+		self.fname = fname
+		self.lname = lname
+	@property 
+	def name(self):
+		return f"{self.fname} {self.lname}"
+	
+	@name.setter
+	def name(self, string):
+		self.fname = string.split(' ')[0]
+		self.lname = string.split(' ')[1]
+	
+p = Person("jonh", "doe")
+print(p.name)
+p.name = "shivkumar rajmane"
+print(p.fname)
+print(p.lname)
+
+# self.attribute = public
+# self._attribute = protected
+# self.__attribute = private
+a =2
+b =	2
+print(type(a/b))
+print(F"{a}")
+a = 2 +  2j
+print(a)

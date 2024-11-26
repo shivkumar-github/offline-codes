@@ -41,6 +41,7 @@ def displayWeatherInfo():
     except Exception as e:
         resultLabel.config(text="Unable to fetch weather data.")
 
+    
 def on_enter(event):
     event.widget.config(bg="#45a049")
 
@@ -49,9 +50,8 @@ def on_leave(event):
 
 root = tk.Tk()
 root.title("pyAtmos")
-root.resizable(False,False)
 root.geometry("500x600")
-root.configure(bg="#87CEEB")  
+root.config(bg="#87CEEB")  
 
 titleLabel = tk.Label(
     root,
@@ -71,7 +71,7 @@ submitButton = tk.Button(
     root,
     text="Check Weather 🌦",  
     command=displayWeatherInfo,
-    font=("Helvetica", 14),
+    font=("Segoe UI Emoji", 14),
     bg="#4CAF50",
     fg="white",
     relief="flat",
@@ -83,19 +83,19 @@ submitButton.bind("<Enter>", on_enter)
 submitButton.bind("<Leave>", on_leave)
 
 resultFrame = tk.Frame(root, bg="white", bd=2, relief="sunken")
-resultFrame.pack(pady=20, padx=20, fill="both", expand=True)
+resultFrame.pack(pady=20, padx=20, expand=True, fill="both")
 
 resultLabel = tk.Label(
     resultFrame,
     text="",
-    font=("Helvetica", 14),
+    font=("Segoe UI Emoji", 14),
     bg="white",
     fg="black",
     justify="left",
     anchor="nw",
+    relief="flat",
     padx=10,
     pady=10
 )
 resultLabel.pack(fill="both", expand=True)
-
 root.mainloop()
