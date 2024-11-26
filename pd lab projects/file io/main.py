@@ -14,7 +14,6 @@ with open('data.txt') as fread:
 		if len(line.strip())>0:
 			counter+=1
 			newLines.append(line[0].upper() + line[1:-1] + line[-1].upper())
-	print(newLines)
 	counter = Counter(words)
 	print("Unique words in the file : ")
 	for word, count in counter.items():

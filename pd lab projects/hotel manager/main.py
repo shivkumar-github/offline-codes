@@ -5,6 +5,7 @@ import sqlite3
 import matplotlib.pyplot as plt
 import qrcode
 import time
+from time import strftime
 
 available_items = {
     "Dosa": 50,
@@ -23,6 +24,11 @@ TEXT_COLOR = "#333333"
 BUTTON_BG = "#4caf50" 
 BUTTON_FG = "#ffffff" 
 HIGHLIGHT_COLOR = "#a5d6a7"
+
+def update_time():
+    current_time = strftime('%Y-%m-%d %H:%M:%S %p')  
+    time_date_label.config(text=current_time) 
+    time_date_label.after(1000, update_time) 
 
 def connect_db():
     conn = sqlite3.connect('orders.db')  
@@ -172,6 +178,10 @@ ofr.pack(side="left", fill="both", expand=True)
 
 ofrtitle = tk.Label(ofr, text=f"Your Order - ID {order_id}", font=("Helvetica", 18, "bold"), bg=BACKGROUND_COLOR, fg=TEXT_COLOR)
 ofrtitle.pack(pady=20)
+
+time_date_label = tk.Label(ofr, font=("Helvetica", 14), bg=BACKGROUND_COLOR, fg=TEXT_COLOR)
+time_date_label.pack(pady=5)
+update_time()
 
 menu_label = tk.Label(ofr, text="Select Item", font=("Helvetica", 14), bg=BACKGROUND_COLOR, fg=TEXT_COLOR)
 menu_label.pack(pady=5)

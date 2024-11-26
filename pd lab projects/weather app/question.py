@@ -4,8 +4,10 @@ for item in strings:
 	if item.find('-') != -1:
 		start = int(item.split('-')[0])
 		end = int(item.split('-')[1])
-		for i in range(start, end+1):
-			ans.append(i)
+		expanded = [i for i in range(start, end+1)]
+		ans.extend(expanded)
+		# for i in range(start, end+1):
+		# 	ans.append(i)
 	else:
 		ans.append(int(item))
 
