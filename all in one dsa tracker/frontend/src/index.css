@@ -1,0 +1,55 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+.navbar ul{
+  list-style-type: none;
+  background: grey;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 8vw;
+  border-radius:3px;
+}
+
+.main{
+  display: flex;
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 30px;
+}
+
+.main >*{
+/*   background-color: gray; */
+  width: 100%;
+  margin: 25px;
+}
+
+.dsaQts button, .cpQts button{
+  margin-left: 0px;
+  padding: 8px;
+  width: 80px;
+  cursor:pointer;
+}
+
+form{
+  margin: 30px;
+  padding-right: 60vw;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+form>*{
+  width: 100%;
+  box-sizing:border-box;
+}
+
+label{
+  margin: 0 auto 8px 5px;
+}
+
+input{
+  padding: 8px;
+  margin-bottom: 30px;
+}
