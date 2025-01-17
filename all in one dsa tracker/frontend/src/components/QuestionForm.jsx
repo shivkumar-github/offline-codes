@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useQuestionContext } from '../contexts/QuestionsContext.jsx';
 
 function QuestionForm() {
 
@@ -10,16 +11,14 @@ function QuestionForm() {
 	const [needRevision, setNeedRevision] = useState(false);
 	const [error, setError] = useState('');
 	const [success, setSuccess] = useState('');
+	const { addQuestion } = useQuestionContext();
 
-	const addQuestion = async (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
-
+		
 		const questionData = { name, link, note, type, needRevision };
-		console.log(questionData);
 		try {
-			const response = await axios.post("http://localhost:5000/", questionData);
-			
-			if (response.status === 200) {
+				await addQuestion(questionData);
 				setSuccess("Question added successfully!");
 				setName('');
 				setLink('');
@@ -27,7 +26,6 @@ function QuestionForm() {
 				setType('dsa');
 				setNeedRevision(false);
 				setError('');
-			}
 		}
 		catch(err) {
 			setError('Failed to add Question. Please try again', err);
@@ -36,7 +34,7 @@ function QuestionForm() {
 
 	return (
 		<div>
-			<form onSubmit={addQuestion}>
+			<form onSubmit={handleSubmit}>
 				<label htmlFor="name">Name of question</label>
 				<input type="text" id='question-name' value={name} onChange={(e)=>setName(e.target.value)} required/>
 				<label htmlFor="">link</label>

@@ -14,7 +14,7 @@ export default function Home() {
 
 	return (
 		<>
-			<Navbar />
+
 			<div className="main">
 				<div>motivation</div>
 				<div className='dsaQts'><button onClick={() => toggleShowDSA(!showDSA)}>dsa</button>

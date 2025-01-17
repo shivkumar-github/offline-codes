@@ -105,6 +105,35 @@ app.post('/', (req, res) => {
   });
 });
 
+app.delete('/:id', (req, res) => {
+  const id = req.params.id; // Get the ID from the URL
+  const query = `DELETE FROM dsa_questions WHERE id = ?`;
+
+  db.run(query, [id], function (err) {
+    if (err) {
+      console.error('Error:', err.message);
+      return res.status(500).json({
+        message: "Failed to delete the question.",
+        error: err.message,
+      });
+    }
+
+    if (this.changes > 0) {
+      console.log("Data deleted successfully.");
+      return res.status(200).json({
+        message: "Question deleted successfully.",
+        data: { id },// can only return id as record is deleted
+      });
+    } else {
+      console.log("No data was found.");
+      return res.status(404).json({
+        message: "No question found with the given ID.",
+      });
+    }
+  });
+});
+
+
 app.listen(5000, () => {
   console.log('Server is listening on port 5000');
 });
