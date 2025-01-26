@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
 const cors = require('cors');
-
+// initialisations
 const app = express();
 
 app.use(cors());
@@ -12,24 +12,31 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 const dbPath = path.join(__dirname, 'database.db');
 const db = new sqlite3.Database(dbPath);
+const ratingMap = {
+  'easy': 1,
+  'medium': 2,
+  'hard': 3,
+}
 
 const createTablesIfNotExist = () => {
   const createDsaTableQuery = `
     CREATE TABLE IF NOT EXISTS dsa_questions (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      id INTEGER PRIMARY KEY,
       name TEXT NOT NULL,
       link TEXT NOT NULL,
       note TEXT,
-      need_revision BOOLEAN DEFAULT false
+      need_revision BOOLEAN DEFAULT false,
+      rating INTEGER
     );
   `;
   const createCpTableQuery = `
     CREATE TABLE IF NOT EXISTS cp_questions (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      id INTEGER PRIMARY KEY,
       name TEXT NOT NULL,
       link TEXT NOT NULL,
       note TEXT,
-      need_revision BOOLEAN DEFAULT false
+      need_revision BOOLEAN DEFAULT false,
+      rating INTEGER
     );
   `;
 
@@ -39,54 +46,54 @@ const createTablesIfNotExist = () => {
     console.log('Tables checked and created if they do not exist.');
   });
 };
-
 createTablesIfNotExist();
 
-app.get('/', (req, res) => {
-  const getDsaQuery = 'SELECT * FROM dsa_questions';
-  const getCpQuery = 'SELECT * FROM cp_questions';
+// requests handling
+// get dsa questions
+app.get('/dsa', (req, res) => {
+  const getDsaQuery = `SELECT * FROM dsa_questions`;
+  db.all(getDsaQuery, [], (err, dsaQuestions) => {
+    if (err) {
+      console.error("Error fetching DSA questions:", err);
+      return res.status(500).json({ message: 'Failed to fetch DSA Questions.' });
+    }
+    res.status(200).json( {dsa_questions:dsaQuestions} );
+  });
+});
 
-  db.serialize(() => {
-    db.all(getDsaQuery, [], (err, dsaQuestions) => {
-      if (err) {
-        console.error("Error fetching DSA questions:", err);
-        return res.status(500).json({ message: 'Failed to fetch DSA Questions.' })
-      }
-
-      db.all(getCpQuery, [], (err, cpQuestions) => {
-        if (err) {
-          console.error('Error fetching CP questions: ', err);
-          return res.status(500).json({ message: 'Failed to fetch Cp Questions.' })
-        }
-
-        res.status(200).json({
-          dsa_questions: dsaQuestions,
-          cp_questions: cpQuestions,
-        });
-      });
+// get cp questions
+app.get('/cp', (req, res) => {
+  const getCpQuery = `SELECT * FROM  cp_questions`;
+  db.all(getCpQuery, [], (err, cpQuestions) => {
+    if (err) {
+      console.error("Error fetching CP questions:", err);
+      return res.status(500).json({ message: 'Failed to fetch CP Questions.' });
+    }
+    res.status(200).json({
+      cp_questions: cpQuestions,
     });
   });
-
 });
 
 app.post('/', (req, res) => {
-  const { name, link, note, type, needRevision } = req.body;
-  let tableName = '';
+  const { id, name, link, note, type, rating, needRevision = false } = req.body;
 
-  if (type === 'dsa') {
-    tableName = 'dsa_questions';
-  } else if (type === 'cp') {
-    tableName = 'cp_questions';
-  } else {
+  if (!id) id = Date.now();
+  if (!name || !link || !rating || !type) {
+    return res.status(400).json({ message: 'Name, link,rating and type are required fields' });
+  }
+  const numRating = ratingMap[rating.toLowerCase()]
+  const tableName = type === 'dsa' ? 'dsa_questions' : type === 'cp' ? 'cp_questions' : null;
+  if (!tableName) {
     return res.status(400).json({ message: 'Invalid type. Use "dsa" or "cp".' });
   }
-
   const query = `
-    INSERT INTO ${tableName} (name, link, note, need_revision)
-    VALUES (?, ?, ?, ?)
+    INSERT INTO ${tableName} (id, name, link, note, need_revision,rating)
+    VALUES (?, ?, ?, ?, ?, ?)
   `;
-
-  db.run(query, [name, link, note, needRevision], function (err) {
+  
+  console.log('insertin....');
+  db.run(query, [id, name, link, note, needRevision, numRating], function (err) {
     if (err) {
       console.error('Error inserting question:', err);
       return res.status(500).json({ message: 'Failed to insert question.' });
@@ -95,44 +102,109 @@ app.post('/', (req, res) => {
     return res.status(200).json({
       message: 'Question added successfully.',
       data: {
-        id: this.lastID,
+        id,
         name,
         link,
         note,
         need_revision: needRevision,
+        rating,
       },
     });
   });
 });
 
-app.delete('/:id', (req, res) => {
-  const id = req.params.id; // Get the ID from the URL
-  const query = `DELETE FROM dsa_questions WHERE id = ?`;
+app.put('/:id&:type', (req, res) => {
+  console.log('recieved updations')
+  const { id, type } = req.params;
+  const { name, link, note, needRevision } = req.body;
 
-  db.run(query, [id], function (err) {
+  if (isNaN(id)) {
+    return res.status(400).json({ message: 'Invalid ID format.' });
+  }
+
+  if (!name || !link || !note || needRevision === undefined) {
+    return res.status(400).json({ message: 'Name, link, note, and needRevision are required fields' });
+  }
+
+  const tableName = type === 'dsa' ? 'dsa_questions' : type === 'cp' ? 'cp_questions' : null;
+
+  if (!tableName) {
+    return res.status(400).json({ message: 'Invalid type. Use "dsa" or "cp".' });
+  }
+
+  const selectQuery = `SELECT * FROM ${tableName} WHERE id = ?`;
+  const updateQuery = `
+    UPDATE ${tableName}
+    SET name = ?, link = ?, note = ?, need_revision = ?
+    WHERE id = ?
+  `;
+
+  db.get(selectQuery, [id], (err, row) => {
     if (err) {
-      console.error('Error:', err.message);
-      return res.status(500).json({
-        message: "Failed to delete the question.",
-        error: err.message,
-      });
+      return res.status(500).json({ message: 'Database query error', error: err.message });
     }
 
-    if (this.changes > 0) {
-      console.log("Data deleted successfully.");
-      return res.status(200).json({
-        message: "Question deleted successfully.",
-        data: { id },// can only return id as record is deleted
-      });
-    } else {
-      console.log("No data was found.");
-      return res.status(404).json({
-        message: "No question found with the given ID.",
-      });
+    if (!row) {
+      return res.status(404).json({ message: 'No question found with the given ID.' });
     }
+
+    db.run(updateQuery, [name, link, note, Boolean(needRevision), id], function (err) {
+      if (err) {
+        return res.status(500).json({ message: 'Failed to update the question', error: err.message });
+      }
+
+      return res.status(200).json({
+        message: 'Question updated successfully.',
+        data: { id, name, link, note, need_revision: Boolean(needRevision) },
+      });
+    });
   });
 });
 
+app.delete('/:id&:type', (req, res) => {
+  const { id, type } = req.params;
+
+  console.log(`Attempting to delete question with ID: ${id} and type: ${type}`);
+
+  const tableName = type === 'dsa' ? 'dsa_questions' : type === 'cp' ? 'cp_questions' : null;
+
+  if (!tableName) {
+    return res.status(400).json({ message: 'Invalid type. Use "dsa" or "cp".' });
+  }
+
+  const selectQuery = `SELECT * FROM ${tableName} WHERE id = ?`;
+  const deleteQuery = `DELETE FROM ${tableName} WHERE id = ?`;
+
+  db.get(selectQuery, [id], (err, row) => {
+    if (err) {
+      console.error('Error fetching record:', err.message);
+      return res.status(500).json({ message: "Database query error", error: err.message });
+    }
+
+    if (!row) {
+      console.log(`No record found with ID: ${id}`);
+      return res.status(404).json({ message: "No question found with the given ID." });
+    }
+
+    db.run(deleteQuery, [id], function (err) {
+      if (err) {
+        console.error('Error during deletion:', err.message);
+        return res.status(500).json({ message: "Failed to delete the question", error: err.message });
+      }
+
+      if (this.changes > 0) {
+        console.log("Data deleted successfully.");
+        return res.status(200).json({
+          message: "Question deleted successfully.",
+          data: { id, type },
+        });
+      } else {
+        console.log("No data was found after deletion attempt.");
+        return res.status(404).json({ message: "No question found with the given ID." });
+      }
+    });
+  });
+});
 
 app.listen(5000, () => {
   console.log('Server is listening on port 5000');

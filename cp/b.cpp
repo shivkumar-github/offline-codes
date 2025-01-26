@@ -1,6 +1,10 @@
 #include "bits/stdc++.h"
 using namespace std;
+#define endl "\n"
 #define int long long
+#define ll long long
+#define lli long long int
+#define ull unsigned long long
 #define vi vector<int>
 #define vvi vector<vi>
 #define vll vector<long long>
@@ -13,20 +17,19 @@ using namespace std;
 
 void solve()
 {
-	int n, x;
-	cin >> n >> x;
-	vi v(n);
-	fr(i, n) cin >> v[i];
-	int mx = v[0], mn = v[0], changes = 0;
-	fr(i,n){
-		mx = max(mx, v[i]);
-		mn = min(mn, v[i]);
-		if(mx-mn>2*x){
-			++changes;
-			mx = mn = v[i];
+	int n;
+	cin >> n;
+	vi v(n + 1);
+	rep(i, 1, n) cin >> v[i];
+	rep(i, 1, n)
+	{
+		if (2 * (i-1) >= min(v[i], v[1]) || 2 * (n - i) >= min(v[i], v[n]))
+		{
+			cout << "NO" << endl;
+			return;
 		}
 	}
-	cout << changes << "\n";
+	cout << "YES" << endl;
 }
 
 int32_t main()

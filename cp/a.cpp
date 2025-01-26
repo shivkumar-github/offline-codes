@@ -1,5 +1,7 @@
 #include "bits/stdc++.h"
 using namespace std;
+#define endl "\n"
+#define int long long
 #define ll long long
 #define lli long long int
 #define ull unsigned long long
@@ -14,19 +16,10 @@ using namespace std;
 #define srt(v)  sort(v.begin(),v.end()) 
 
 void solve(){
-	int n,d;
-	cin>>n >> d;
-	vi v(n);
-	fr(i, n) cin >> v[i];
-	srt(v);
-	int rem = n, teams = 0;
-	for (int i = n - 1; i >= 0 && rem>=0;i--){
-		int req = (d + v[i])/v[i];
-		if(rem<req) break;
-		rem -= req;
-		teams++;
-	}
-	cout << teams << "\n";
+	string s;
+	cin >> s;
+	int cnt  = count(s.begin(), s.end(), '1');
+	cout << cnt << endl;
 }
 
 int32_t main()
@@ -34,6 +27,11 @@ int32_t main()
 	ios_base::sync_with_stdio(false);
 	cin.tie(NULL);
 	cout.tie(NULL);
-	solve();
+	int T = 1;
+	cin >> T;
+	while (T--)
+	{
+		solve();
+	}
 	return 0;
 }

@@ -1,5 +1,7 @@
 #include "bits/stdc++.h"
 using namespace std;
+#define endl "\n"
+#define int long long
 #define ll long long
 #define lli long long int
 #define ull unsigned long long
@@ -15,13 +17,21 @@ using namespace std;
 
 void solve()
 {
-	int n, r, b;
-	cin >> n >> r >> b;
-	string ans = "";
-	int t = r/(b+1), extra = r % (b + 1);
-	fr(i, extra) cout << string(t + 1, 'R') << 'B';
-	rep(i, extra, b - 1) cout << string(t, 'R') << 'B';
-	cout << string(t, 'R')<< endl;
+	int n;
+	cin >> n;
+	vll v(n+1);
+	rep(i, 1, n) cin >> v[i];
+	ll now = n, ans = -1e18;
+	rep(i, 1, n)
+	{
+		ll sum = 0;
+		rep(i, 1, now) sum += v[i];
+		if(i==1) ans = max(ans, sum);
+		else ans = max(ans, max(sum, -1 * sum));
+		rep(i, 1, now - 1) v[i] = v[i + 1] - v[i];
+		now--;
+	}
+	cout << ans << endl;
 }
 
 int32_t main()

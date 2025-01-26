@@ -8,14 +8,20 @@ export const useQuestionContext = () => {
 	return useContext(QuestionsContext);
 };
 
-export const QuestionsContextProvider = ({ children }) => {
+export  const QuestionsContextProvider = ({ children }) => {
 	const [dsaQuestions, setDsaQuestions] = useState([]);
 	const [cpQuestions, setCpQuestions] = useState([]);
+	
 
 	const addQuestion = async (questionData) => {
 		try {
-			const response = await axios.post("http://localhost:5000/", questionData);
+			const response = await axios.post("http://localhost:5000/", questionData, {
+				headers: {
+					'Content-Type': 'application/json'           
+				  }
+			});
 			if (response.status === 200) {
+				console.log(response.data);
 				if (questionData.type === 'dsa')
 					setDsaQuestions((prevQuestions) => [...prevQuestions, response.data]);
 				else setCpQuestions((prevQuestions) => [...prevQuestions, response.data]);
@@ -36,6 +42,8 @@ export const QuestionsContextProvider = ({ children }) => {
 	};
 
 	const value = {
+		setDsaQuestions,
+		setCpQuestions,
 		dsaQuestions,
 		cpQuestions,
 		addQuestion,
