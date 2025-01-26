@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useQuestionContext } from '../contexts/QuestionsContext.jsx';
+import { useQuestionsContext } from '../contexts/QuestionsContext.jsx';
 
 function QuestionForm({ refreshDSAQuestions }) {
 
@@ -11,7 +11,7 @@ function QuestionForm({ refreshDSAQuestions }) {
 	const [rating, setRating] = useState('Easy');
 	const [error, setError] = useState('');
 	const [success, setSuccess] = useState('');
-	const { addQuestion } = useQuestionContext();
+	const { addQuestion } = useQuestionsContext();
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();

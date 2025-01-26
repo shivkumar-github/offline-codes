@@ -38,7 +38,7 @@ function QuestionDetails({ question, id, refreshDSAQuestions }) {
             <div className="question-details-header">
                 {question.name}
             </div>
-            <a href={link} className="question-details-link" target="_blank" rel="noopener noreferrer" > View Problem </a>
+            <a href={link} className="question-details-link" target="_blank" rel="noopener noreferrer" > Link </a>
             
             <MdNoteAlt onClick={openModal} className="react-icon question-details-note" style={{}} />
             

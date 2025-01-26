@@ -8,3 +8,5 @@ Currently, two official plugins are available:
 - [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
 # NOTE: check what is happening with cors and proxy
+
+# todo : question tags, note icon, note modal, revision of refresh

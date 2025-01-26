@@ -1,29 +1,20 @@
 import React, { createContext, useState, useContext } from 'react';
 import axios from 'axios'
-
 const QuestionsContext = createContext();
 
 // custom created hook to use context
-export const useQuestionContext = () => {
-	return useContext(QuestionsContext);
-};
+export const useQuestionsContext = () => { return useContext(QuestionsContext); };
 
-export  const QuestionsContextProvider = ({ children }) => {
+export const QuestionsContextProvider = ({ children }) => {
 	const [dsaQuestions, setDsaQuestions] = useState([]);
 	const [cpQuestions, setCpQuestions] = useState([]);
-	
 
 	const addQuestion = async (questionData) => {
 		try {
-			const response = await axios.post("http://localhost:5000/", questionData, {
-				headers: {
-					'Content-Type': 'application/json'           
-				  }
-			});
+			const response = await axios.post("/", questionData, {headers: {'Content-Type': 'application/json'},});
 			if (response.status === 200) {
 				console.log(response.data);
-				if (questionData.type === 'dsa')
-					setDsaQuestions((prevQuestions) => [...prevQuestions, response.data]);
+				if (questionData.type === 'dsa') setDsaQuestions((prevQuestions) => [...prevQuestions, response.data]);
 				else setCpQuestions((prevQuestions) => [...prevQuestions, response.data]);
 			}
 		}
@@ -32,24 +23,10 @@ export  const QuestionsContextProvider = ({ children }) => {
 		}
 	};
 
-	const removeDsaQuestions = (id) => {
-		setDsaQuestions((prevQuestions) => prevQuestions.filter((q) => q.id != id));
-	};
+	const removeDsaQuestions = (id) => { setDsaQuestions((prevQuestions) => prevQuestions.filter((q) => q.id != id)); };
+	const removeCpQuestions = (id) => { setCpQuestions((prevQuestions) => prevQuestions.filter((q) => q.id != id)); };
 
-	const removeCpQuestions = (id) => {
-		setCpQuestions((prevQuestions) => prevQuestions.filter((q) => q.id != id));
-
-	};
-
-	const value = {
-		setDsaQuestions,
-		setCpQuestions,
-		dsaQuestions,
-		cpQuestions,
-		addQuestion,
-		removeCpQuestions,
-		removeDsaQuestions,
-	};
+	const value = { setDsaQuestions, setCpQuestions, dsaQuestions, cpQuestions, addQuestion, removeCpQuestions, removeDsaQuestions, };
 
 	return (
 		<QuestionsContext.Provider value={value}>

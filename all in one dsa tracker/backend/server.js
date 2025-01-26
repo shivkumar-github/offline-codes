@@ -51,27 +51,28 @@ createTablesIfNotExist();
 // requests handling
 // get dsa questions
 app.get('/dsa', (req, res) => {
-  const getDsaQuery = `SELECT * FROM dsa_questions`;
-  db.all(getDsaQuery, [], (err, dsaQuestions) => {
-    if (err) {
-      console.error("Error fetching DSA questions:", err);
+  let { from, to } = req.query;
+  from = from ? from.toLowerCase() : 'easy';
+  to = to ? to.toLowerCase() : 'hard';
+  let getDsaQuery = 'SELECT * FROM dsa_questions WHERE 1=1';
+  const queryParams = [];
+
+  if (from) {
+    getDsaQuery += ' AND rating >= ?';
+    queryParams.push(ratingMap[from] || 1);
+  }
+  if (to) {
+    getDsaQuery += ' AND rating <= ?';
+    queryParams.push(ratingMap[to] || 3);
+  }
+
+  db.all(getDsaQuery, queryParams, (err, dsaQuestions) => {
+    if (err) { 
+      // console.error("Error fetching DSA questions:", err);
+      console.log('Error fetching DSA questions:');
       return res.status(500).json({ message: 'Failed to fetch DSA Questions.' });
     }
-    res.status(200).json( {dsa_questions:dsaQuestions} );
-  });
-});
-
-// get cp questions
-app.get('/cp', (req, res) => {
-  const getCpQuery = `SELECT * FROM  cp_questions`;
-  db.all(getCpQuery, [], (err, cpQuestions) => {
-    if (err) {
-      console.error("Error fetching CP questions:", err);
-      return res.status(500).json({ message: 'Failed to fetch CP Questions.' });
-    }
-    res.status(200).json({
-      cp_questions: cpQuestions,
-    });
+    res.status(200).json({ dsa_questions: dsaQuestions });
   });
 });
 
@@ -99,17 +100,7 @@ app.post('/', (req, res) => {
       return res.status(500).json({ message: 'Failed to insert question.' });
     }
 
-    return res.status(200).json({
-      message: 'Question added successfully.',
-      data: {
-        id,
-        name,
-        link,
-        note,
-        need_revision: needRevision,
-        rating,
-      },
-    });
+    return res.status(200).json({ message: 'Question added successfully.', data: {id, name, link, note,need_revision: needRevision, rating, },});
   });
 });
 
@@ -118,19 +109,12 @@ app.put('/:id&:type', (req, res) => {
   const { id, type } = req.params;
   const { name, link, note, needRevision } = req.body;
 
-  if (isNaN(id)) {
-    return res.status(400).json({ message: 'Invalid ID format.' });
-  }
-
-  if (!name || !link || !note || needRevision === undefined) {
-    return res.status(400).json({ message: 'Name, link, note, and needRevision are required fields' });
-  }
+  if (isNaN(id)) {return res.status(400).json({ message: 'Invalid ID format.' });}
+  if (!name || !link || !note || needRevision === undefined) {return res.status(400).json({ message: 'Name, link, note, and needRevision are required fields' });}
 
   const tableName = type === 'dsa' ? 'dsa_questions' : type === 'cp' ? 'cp_questions' : null;
 
-  if (!tableName) {
-    return res.status(400).json({ message: 'Invalid type. Use "dsa" or "cp".' });
-  }
+  if (!tableName) {return res.status(400).json({ message: 'Invalid type. Use "dsa" or "cp".' });}
 
   const selectQuery = `SELECT * FROM ${tableName} WHERE id = ?`;
   const updateQuery = `
@@ -140,19 +124,11 @@ app.put('/:id&:type', (req, res) => {
   `;
 
   db.get(selectQuery, [id], (err, row) => {
-    if (err) {
-      return res.status(500).json({ message: 'Database query error', error: err.message });
-    }
-
-    if (!row) {
-      return res.status(404).json({ message: 'No question found with the given ID.' });
-    }
+    if (err) { return res.status(500).json({ message: 'Database query error', error: err.message });}
+    if (!row) {return res.status(404).json({ message: 'No question found with the given ID.' });}
 
     db.run(updateQuery, [name, link, note, Boolean(needRevision), id], function (err) {
-      if (err) {
-        return res.status(500).json({ message: 'Failed to update the question', error: err.message });
-      }
-
+      if (err) {return res.status(500).json({ message: 'Failed to update the question', error: err.message });}
       return res.status(200).json({
         message: 'Question updated successfully.',
         data: { id, name, link, note, need_revision: Boolean(needRevision) },
@@ -165,13 +141,9 @@ app.delete('/:id&:type', (req, res) => {
   const { id, type } = req.params;
 
   console.log(`Attempting to delete question with ID: ${id} and type: ${type}`);
-
   const tableName = type === 'dsa' ? 'dsa_questions' : type === 'cp' ? 'cp_questions' : null;
 
-  if (!tableName) {
-    return res.status(400).json({ message: 'Invalid type. Use "dsa" or "cp".' });
-  }
-
+  if (!tableName) {return res.status(400).json({ message: 'Invalid type. Use "dsa" or "cp".' });}
   const selectQuery = `SELECT * FROM ${tableName} WHERE id = ?`;
   const deleteQuery = `DELETE FROM ${tableName} WHERE id = ?`;
 
@@ -206,6 +178,4 @@ app.delete('/:id&:type', (req, res) => {
   });
 });
 
-app.listen(5000, () => {
-  console.log('Server is listening on port 5000');
-});
+app.listen(5000, () => { console.log('Server is listening on port 5000');});
