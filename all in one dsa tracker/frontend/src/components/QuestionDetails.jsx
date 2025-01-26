@@ -47,7 +47,7 @@ function QuestionDetails({ question, id, refreshDSAQuestions }) {
             </div>
             
             <div className="question-details-rating" style={{ color: colorMap[rating] }}>
-                {`${ratingMap[rating]}`}
+                {`${ratingMap[rating]} `}
             </div>
             
             <MdDelete className="react-icon" onClick={handleDeleteClick} />

@@ -10,3 +10,5 @@ Currently, two official plugins are available:
 # NOTE: check what is happening with cors and proxy
 
 # todo : question tags, note icon, note modal, revision of refresh
+
+# what do we need different for cp question details - rating display, update need revision function -  i Think we don't need another question details component.
