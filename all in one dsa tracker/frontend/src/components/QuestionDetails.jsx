@@ -3,11 +3,12 @@ import axios from "axios";
 import NoteModal from './NoteModal'; import { CiStar } from "react-icons/ci"; import { FaStar } from "react-icons/fa"; import { MdNoteAlt } from "react-icons/md"; import { MdDelete } from "react-icons/md";
 
 function QuestionDetails({ question, id, refreshDSAQuestions }) {
-    const { name, link, note, needRevision, rating } = question;
-    const [revision, setRevision] = useState(needRevision);
+    console.log(question);
+    const { name, link, note, need_revision, rating } = question;
+    const [revision, setRevision] = useState(need_revision);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    useEffect(() => { setRevision(needRevision); }, [needRevision]);
+    useEffect(() => { setRevision(revision); }, [revision]);
 
     const toggleNeedRevision = async () => {
         try {
@@ -43,7 +44,7 @@ function QuestionDetails({ question, id, refreshDSAQuestions }) {
             <MdNoteAlt onClick={openModal} className="react-icon question-details-note" style={{}} />
             
             <div className={`question-details-revision ${!revision ? "no-revision" : ""}`}>
-                {revision ? (<FaStar className='react-icon' onClick={toggleNeedRevision} />) : (<CiStar className="react-icon" onClick={toggleNeedRevision} />)}
+                {question.need_revision ? (<FaStar className='react-icon' onClick={toggleNeedRevision} />) : (<CiStar className="react-icon" onClick={toggleNeedRevision} />)}
             </div>
             
             <div className="question-details-rating" style={{ color: colorMap[rating] }}>

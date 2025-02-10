@@ -11,11 +11,10 @@ export const QuestionsContextProvider = ({ children }) => {
 
 	const addQuestion = async (questionData) => {
 		try {
-			const response = await axios.post("/", questionData, {headers: {'Content-Type': 'application/json'},});
+			const response = await axios.post("http://localhost:5000", questionData, {headers: {'Content-Type': 'application/json'},});
 			if (response.status === 200) {
 				console.log(response.data);
-				if (questionData.type === 'dsa') setDsaQuestions((prevQuestions) => [...prevQuestions, response.data]);
-				else setCpQuestions((prevQuestions) => [...prevQuestions, response.data]);
+				setDsaQuestions((prevQuestions) => [...prevQuestions, response.data]);
 			}
 		}
 		catch (err) {

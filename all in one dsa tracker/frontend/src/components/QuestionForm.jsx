@@ -18,8 +18,8 @@ function QuestionForm({ refreshDSAQuestions }) {
 		const id = Date.now();
 		const questionData = { id, name, link, note, type, needRevision, rating };
 		try {
-			await addQuestion(questionData);
 			setSuccess("Question added successfully!");
+			await addQuestion(questionData);
 			setName('');
 			setLink('');
 			setNote('');

@@ -99,7 +99,6 @@ app.post('/', (req, res) => {
       console.error('Error inserting question:', err);
       return res.status(500).json({ message: 'Failed to insert question.' });
     }
-
     return res.status(200).json({ message: 'Question added successfully.', data: {id, name, link, note,need_revision: needRevision, rating, },});
   });
 });

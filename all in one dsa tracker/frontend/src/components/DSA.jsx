@@ -10,9 +10,9 @@ function DSA() {
   const [from, setFrom] = useState('easy');
   const [to, setTo] = useState('hard');
 
-  useEffect(() => { refreshDSAQuestions(); }, [from, to]);
+  useEffect(() => { refreshDSAQuestions(from, to); }, [from, to]);
 
-  const refreshDSAQuestions = async () => {
+  const refreshDSAQuestions = async (from='easy', to = 'hard') => {
     try {
       const response = await axios.get(`http://localhost:5000/dsa?from=${from}&to=${to}`);
       if (response.status === 200) { setDsaQuestions(response.data.dsa_questions); }
