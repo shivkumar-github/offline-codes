@@ -13,7 +13,6 @@ export const QuestionsContextProvider = ({ children }) => {
 		try {
 			const response = await axios.post("http://localhost:5000", questionData, {headers: {'Content-Type': 'application/json'},});
 			if (response.status === 200) {
-				console.log(response.data);
 				setDsaQuestions((prevQuestions) => [...prevQuestions, response.data]);
 			}
 		}

@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import NoteModal from './NoteModal'; import { CiStar } from "react-icons/ci"; import { FaStar } from "react-icons/fa"; import { MdNoteAlt } from "react-icons/md"; import { MdDelete } from "react-icons/md";
+import NoteModal from './NoteModal';
+import { CiStar } from "react-icons/ci";
+import { FaStar } from "react-icons/fa";
+import { MdNoteAlt } from "react-icons/md";
+import { MdDelete } from "react-icons/md";
 
 function QuestionDetails({ question, id, refreshDSAQuestions }) {
-    console.log(question);
     const { name, link, note, need_revision, rating } = question;
     const [revision, setRevision] = useState(need_revision);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -41,7 +44,7 @@ function QuestionDetails({ question, id, refreshDSAQuestions }) {
             </div>
             <a href={link} className="question-details-link" target="_blank" rel="noopener noreferrer" > Link </a>
             
-            <MdNoteAlt onClick={openModal} className="react-icon question-details-note" style={{}} />
+            <MdNoteAlt onClick={openModal} className="react-icon question-details-note" />
             
             <div className={`question-details-revision ${!revision ? "no-revision" : ""}`}>
                 {question.need_revision ? (<FaStar className='react-icon' onClick={toggleNeedRevision} />) : (<CiStar className="react-icon" onClick={toggleNeedRevision} />)}
