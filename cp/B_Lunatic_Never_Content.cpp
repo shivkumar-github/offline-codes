@@ -1,7 +1,6 @@
 #include "bits/stdc++.h"
 using namespace std;
-#define endl "\n"
-#define int long long
+#define nl "\n"
 #define ll long long
 #define lli long long int
 #define ull unsigned long long
@@ -14,24 +13,20 @@ using namespace std;
 #define all(v) v.begin(), v.end()
 #define sz(v) (int)(v.size())
 #define srt(v) sort(v.begin(), v.end())
+#define pb push_back
 
 void solve()
 {
-	int n;
+	ll n;
 	cin >> n;
-	vll v(n+1);
-	rep(i, 1, n) cin >> v[i];
-	ll now = n, ans = -1e18;
-	rep(i, 1, n)
-	{
-		ll sum = 0;
-		rep(i, 1, now) sum += v[i];
-		if(i==1) ans = max(ans, sum);
-		else ans = max(ans, max(sum, -1 * sum));
-		rep(i, 1, now - 1) v[i] = v[i + 1] - v[i];
-		now--;
+	vll a(n + 1);
+	rep(i, 1, n) cin >> a[i];
+
+	ll maxx = 0;
+	for (ll i = 1; i <= n; ++i) {
+		maxx = __gcd(maxx, abs(a[i] - a[n - i + 1]));
 	}
-	cout << ans << endl;
+	cout << maxx << nl;
 }
 
 int32_t main()

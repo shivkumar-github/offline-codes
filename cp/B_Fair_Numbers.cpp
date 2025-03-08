@@ -1,7 +1,6 @@
 #include "bits/stdc++.h"
 using namespace std;
 #define endl "\n"
-#define int long long
 #define ll long long
 #define lli long long int
 #define ull unsigned long long
@@ -15,21 +14,14 @@ using namespace std;
 #define sz(v) (int)(v.size())
 #define srt(v) sort(v.begin(), v.end())
 
-void solve()
+bool isV(ll n)
 {
-	int n;
-	cin >> n;
-	vi v(n + 1);
-	rep(i, 1, n) cin >> v[i];
-	rep(i, 1, n)
-	{
-		if (2 * (i-1) >= min(v[i], v[1]) || 2 * (n - i) >= min(v[i], v[n]))
-		{
-			cout << "NO" << endl;
-			return;
-		}
-	}
-	cout << "YES" << endl;
+	string num = to_string(n);
+	for (auto d : num)
+		if (d != '0' && n % (d - '0'))
+			return false;
+
+	return true;
 }
 
 int32_t main()
@@ -41,7 +33,10 @@ int32_t main()
 	cin >> T;
 	while (T--)
 	{
-		solve();
+		ll n;
+		cin >> n;
+		while (!isV(n)) ++n;
+		cout << n << "\n";
 	}
 	return 0;
 }

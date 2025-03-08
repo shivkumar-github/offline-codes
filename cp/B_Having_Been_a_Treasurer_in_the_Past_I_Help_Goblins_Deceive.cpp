@@ -1,7 +1,5 @@
 #include "bits/stdc++.h"
 using namespace std;
-#define endl "\n"
-#define int long long
 #define ll long long
 #define lli long long int
 #define ull unsigned long long
@@ -14,15 +12,22 @@ using namespace std;
 #define all(v) v.begin(), v.end()
 #define sz(v) (int)(v.size())
 #define srt(v) sort(v.begin(), v.end())
+#define pb push_back
 
 void solve()
 {
-	int x, y, k;
-	cin >> x >> y >> k;
-	int req = (y + 1) * k - 1, pergain = x - 1;
-	cout << k + req / pergain + bool(req % pergain) << endl;
+	ll n;
+	cin >> n;
+	string s;
+	cin >> s;
+	ll nl = count(all(s), '_'), nu = count(all(s), '-');
+	if(nu < 2 || nl < 1) {
+		cout << "0\n";
+		return;
+	}
+	cout << ((nu / 2) * nl * ((nu + 1)/2)) << "\n";
 }
-	
+
 int32_t main()
 {
 	ios_base::sync_with_stdio(false);

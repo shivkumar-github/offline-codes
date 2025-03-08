@@ -1,7 +1,6 @@
 #include "bits/stdc++.h"
 using namespace std;
-#define endl "\n"
-#define int long long
+#define nl "\n"
 #define ll long long
 #define lli long long int
 #define ull unsigned long long
@@ -15,14 +14,24 @@ using namespace std;
 #define sz(v) (int)(v.size())
 #define srt(v) sort(v.begin(), v.end())
 
-void solve()
-{
-	int x, y, k;
-	cin >> x >> y >> k;
-	int req = (y + 1) * k - 1, pergain = x - 1;
-	cout << k + req / pergain + bool(req % pergain) << endl;
+void solve(){
+	ll n;
+	cin >> n;
+	for (int k = 0; k <= 9;++k)
+	{
+		string s = to_string(n - k);
+		int mnOps = 7;
+		for(char c:s){
+			if(c <= '7') // as if numbers are greater than 7 we will always have a leading 0 which we can convert to 7 in 7(which is lesser for any c>7 '8', '9')
+				mnOps = min(mnOps, '7'-c);
+		}
+		if(k >= mnOps) {
+			cout << k << nl;
+			return;
+		}
+	}
 }
-	
+
 int32_t main()
 {
 	ios_base::sync_with_stdio(false);

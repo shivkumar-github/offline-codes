@@ -1,7 +1,6 @@
 #include "bits/stdc++.h"
 using namespace std;
-#define endl "\n"
-#define int long long
+#define nl "\n"
 #define ll long long
 #define lli long long int
 #define ull unsigned long long
@@ -17,12 +16,31 @@ using namespace std;
 
 void solve()
 {
-	int x, y, k;
-	cin >> x >> y >> k;
-	int req = (y + 1) * k - 1, pergain = x - 1;
-	cout << k + req / pergain + bool(req % pergain) << endl;
+	ll n;
+	cin >> n;
+	vector<pair<ll, ll>> v(n);
+	fr(i, n)
+	{
+		cin >> v[i].first;
+		v[i].second = i;
+	}
+	srt(v);
+	vll pfx(n);
+	pfx[0] = v[0].first;
+	rep(i, 1, n - 1) pfx[i] = pfx[i - 1] + v[i].first;
+	int stop = n - 1;
+	vll tans(n);
+	tans[n - 1] = stop;
+	for (int i = n - 2; i >= 0;--i){
+		if(pfx[i]<v[i+1].first) stop = i;
+		tans[i] = stop;
+	}
+	vll ans(n);
+	fr(i, n) ans[v[i].second] = tans[i];
+	fr(i, n) cout << ans[i] << " ";
+	cout << nl;
 }
-	
+
 int32_t main()
 {
 	ios_base::sync_with_stdio(false);
