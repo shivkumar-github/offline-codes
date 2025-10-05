@@ -64,7 +64,6 @@ const createDeletionLogTableQuery = `
 `;
 
 const createTriggers = () => {
-  // Trigger to log deletion in the dsa_questions table
   const createLogDeletionTriggerDsa = `
     CREATE TRIGGER IF NOT EXISTS log_deletion_dsa
     AFTER DELETE ON dsa_questions
@@ -75,7 +74,6 @@ const createTriggers = () => {
     END;
   `;
 
-  // Trigger to log deletion in the cp_questions table
   const createLogDeletionTriggerCp = `
     CREATE TRIGGER IF NOT EXISTS log_deletion_cp
     AFTER DELETE ON cp_questions
@@ -86,7 +84,6 @@ const createTriggers = () => {
     END;
   `;
 
-  // Trigger to prevent deletion of questions marked for revision (dsa_questions)
   const preventDeleteRevisionDsa = `
     CREATE TRIGGER IF NOT EXISTS prevent_delete_revision_dsa
     BEFORE DELETE ON dsa_questions
@@ -98,7 +95,6 @@ const createTriggers = () => {
     END;
   `;
 
-  // Trigger to prevent deletion of questions marked for revision (cp_questions)
   const preventDeleteRevisionCp = `
     CREATE TRIGGER IF NOT EXISTS prevent_delete_revision_cp
     BEFORE DELETE ON cp_questions
@@ -110,7 +106,6 @@ const createTriggers = () => {
     END;
   `;
 
-  // Run the queries to create triggers
   db.serialize(() => {
     db.run(createDeletionLogTableQuery);
     db.run(createLogDeletionTriggerDsa);
@@ -308,7 +303,10 @@ app.delete('/:id&:type', (req, res) => {
       console.log(`No record found with ID: ${id}`);
       return res.status(404).json({ message: "No question found with the given ID." });
     }
-
+    if (row.need_revision) {
+      console.log(`Cannot delete a question that needs revision.`);
+      return res.status(400).json({ message: "Cannot delete a question that needs revision." });
+    }
     db.run(deleteQuery, [id], function (err) {
       if (err) {
         console.error('Error during deletion:', err.message);
